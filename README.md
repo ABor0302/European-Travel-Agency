@@ -1,6 +1,6 @@
 # European Travel Agency Weather Forecast Project
 
-This project is a web application developed to increase bookings for a European travel agency. It provides visitors with a 7-day weather forecast for major European cities.
+This project is a web application developed to increase bookings for a European travel agency. It provides visitors with a 5-day weather forecast for major European cities.
 
 ## About the Project
 
@@ -21,4 +21,4 @@ This web application uses the OpenWeatherMap API to fetch real-time weather data
 
 3. **City Selection**: Use the dropdown menu on the web page to select the city you want to see weather forecasts for.
 
-4. **Display Weather**: Click the "Get Weather" button to see the 7-day weather forecasts for the selected city.
+4. **Display Weather**: Click the "Get Weather" button to see the 5-day weather forecasts for the selected city.
