@@ -48,3 +48,9 @@ button:hover {
     border: 1px solid #ccc;
     background-color: #f9f9f9;
 }
+
+.forecast-day {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}

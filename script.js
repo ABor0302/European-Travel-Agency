@@ -1,20 +1,45 @@
+const apiKey = '94130afe79e4f11b89631c088541b155';
+
 function getWeather() {
-    const apiKey = 'YOUR APİ KEY';
     const city = document.getElementById('citySelect').value;
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
             console.log(data);
             const weatherInfo = document.getElementById('weatherInfo');
-            weatherInfo.innerHTML = `
-                <h2>Weather in ${data.name}</h2>
-                <p>Temperature: ${data.main.temp} °C</p>
-                <p>Description: ${data.weather[0].description}</p>
-                <p>Humidity: ${data.main.humidity}%</p>
-            `;
+            let forecastHTML = `<h2>5-Day Weather Forecast for ${city}</h2>`;
+
+            // Reduce data list to 5-day forecast by selecting one item per day (at noon)
+            const dailyData = [];
+            const dailyDataMap = new Map();
+
+            data.list.forEach(item => {
+                const date = new Date(item.dt * 1000).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                if (!dailyDataMap.has(date)) {
+                    dailyDataMap.set(date, item);
+                }
+            });
+
+            dailyDataMap.forEach((value, key) => dailyData.push(value));
+
+            dailyData.forEach((day, index) => {
+                if (index < 5) { // Only show 5 days
+                    const date = new Date(day.dt * 1000).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                    forecastHTML += `
+                        <div class="forecast-day">
+                            <h3>${date}</h3>
+                            <p>Temperature: ${day.main.temp} °C</p>
+                            <p>Description: ${day.weather[0].description}</p>
+                            <p>Humidity: ${day.main.humidity}%</p>
+                        </div>
+                    `;
+                }
+            });
+
+            weatherInfo.innerHTML = forecastHTML;
         })
         .catch(error => {
             console.log('Error fetching weather data:', error);
